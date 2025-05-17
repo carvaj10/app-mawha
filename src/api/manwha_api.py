@@ -63,3 +63,13 @@ def get_chapter_images(slug, chapter_id):
             "next_chapter": None,
             "comic": {"name": "Error"}
         }
+        
+        
+def search_manwhas_query(query):
+    try:
+        response = requests.get(f"https://dashboard.olympusbiblioteca.com/api/search?name={query}")
+        response.raise_for_status()
+        return response.json().get("data", [])
+    except requests.RequestException as e:
+        print("Error fetching manwhas:", e)
+        return []

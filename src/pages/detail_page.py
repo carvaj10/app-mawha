@@ -11,7 +11,7 @@ class ManwhaDetailPage(ft.View):
         self.chapters_to_show = 30
         self._load_data()
         self.all_chapters = self.manwha_chapters.copy()
-        self.data_cop = self.data.copy()
+        self.data_cop = self.data.copy() if self.data is not None else None
 
         super().__init__(
             scroll=ft.ScrollMode.AUTO,
@@ -39,20 +39,23 @@ class ManwhaDetailPage(ft.View):
             slug=self.slug,
             chapter_id=chapter.get("id"),
             chapter_name=chapter.get("name"),
-            manwha_name=self.data_cop.get("name", "Desconocido")
+            manwha_name=self.data_cop.get("name", "Desconocido") if self.data_cop else "Desconocido",
         )
-        self.page.views.append(chapter_page)
-        self.page.update()
+        if self.page is not None and self.page.views is not None:
+            self.page.views.append(chapter_page)
+            self.page.update()
 
     def load_more_chapters(self, e):
         self.chapters_to_show += 30
-        self.controls[1].content = self.build_detail_content()
+        container = self.controls[1]
+        container.content = self.build_detail_content()
         self.update()
 
     def go_back(self, e):
-        if len(self.page.views) > 1:
-            self.page.views.pop()
-            self.page.update()
+        if self.page is not None and self.page.views is not None:
+            if len(self.page.views) > 1:
+                self.page.views.pop()
+                self.page.update()
 
     def build_detail_content(self):
         displayed_chapters = self.all_chapters[:self.chapters_to_show]
@@ -61,7 +64,7 @@ class ManwhaDetailPage(ft.View):
             controls=[
                 ManwhaHeader(self.data_cop),
                 ft.Container(height=20),
-                ManwhaSynopsis(self.data_cop.get("summary", "Sin descripción")),
+                ManwhaSynopsis(self.data_cop.get("summary", "Sin descripción") if self.data_cop else "Sin descripción"),
                 ManwhaChaptersList(displayed_chapters, self.chapters_to_show, len(self.all_chapters), self.open_chapter, self.load_more_chapters)
             ],
             spacing=10,

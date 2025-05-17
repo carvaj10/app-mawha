@@ -4,7 +4,7 @@ def ManwhaChaptersList(chapters, chapters_to_show, total_chapters, open_chapter,
     chapter_controls = [
         ft.Container(
             content=ft.Row([
-                ft.Text(f"Capítulo {chapter['name']}", weight="bold", size=16),
+                ft.Text(f"Capítulo {chapter['name']}", weight=ft.FontWeight.BOLD, size=16),
                 ft.Container(expand=True),
                 ft.Icon(name=ft.Icons.VISIBILITY, size=16, color=ft.Colors.GREY_400)
             ]),

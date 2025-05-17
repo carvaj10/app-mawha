@@ -3,7 +3,7 @@ import flet as ft
 def ManwhaHeader(data):
     cover_url = data.get("cover") or "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"
     name = data.get("name", "Desconocido")
-    status = data.get("status", {}).get("name", "Estado desconocido")
+    status = data.get("status", {}).get("name", "Estado desconocido") if data.get("status") else "Estado desconocido"
     genres = ", ".join([genre.get("name", "") for genre in data.get("genres", [])])
     chapter_count = data.get("chapter_count", 0)
 
@@ -19,12 +19,12 @@ def ManwhaHeader(data):
             margin=ft.margin.only(right=20)
         ),
         ft.Column([
-            ft.Text(name, size=24, weight="bold"),
+            ft.Text(name, size=24, weight=ft.FontWeight.BOLD),
             ft.Container(height=10),
             ft.Text(f"Estado: {status}", size=16),
             ft.Text(f"Capítulos: {chapter_count}", size=16),
             ft.Container(height=10),
-            ft.Text("Géneros:", size=16, weight="bold"),
+            ft.Text("Géneros:", size=16, weight=ft.FontWeight.BOLD),
             ft.Text(genres, size=14)
         ], expand=True)
     ])
