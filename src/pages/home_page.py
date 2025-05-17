@@ -30,4 +30,3 @@ class HomePage(ft.Container):
         for i in range(0, len(cards[:14]), 2):
             row = ft.Row(spacing=2, controls=cards[i:i+2], alignment=ft.MainAxisAlignment.CENTER)
             self.content.controls.append(row)
-
