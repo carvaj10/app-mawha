@@ -10,6 +10,7 @@ def ManwhaCard(title, image_url, slug, page):
         page.update()
 
     return ft.GestureDetector(
+        mouse_cursor=ft.MouseCursor.CLICK,
         on_tap=on_card_click,
         content=ft.Card(
             content=ft.Container(
